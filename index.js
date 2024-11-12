@@ -20,22 +20,25 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+app.get("/api", (req, res) => {
+  const currentDate = new Date();
+  res.json({
+    unix: currentDate.getTime(),
+    utc: currentDate.toUTCString()
+  });
 });
-
 app.get("/api/:date", (req, res) => {
   let dateParam = req.params.date;
   let date;
 
-  if(dateParam == null)
-  {
-    date = new Date();
-    res.json({
-      unix: parseInt(date.getTime()),
-      utc: date.toUTCString()
-    })
-  }
+  // if(dateParam == null)
+  // {
+  //   date = new Date();
+  //   res.json({
+  //     unix: parseInt(date.getTime()),
+  //     utc: date.toUTCString()
+  //   })
+  // }
   // Check if dateParam is a valid Unix timestamp or a standard date string
   if (!isNaN(dateParam)) {
     // If it's a number (Unix timestamp), parse it as an integer
