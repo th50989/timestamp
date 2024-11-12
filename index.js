@@ -25,9 +25,17 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", (req, res) => {
-  const dateParam = req.params.date;
+  let dateParam = req.params.date;
   let date;
 
+  if(dateParam == null)
+  {
+    date = new Date();
+    res.json({
+      unix: parseInt(date.getTime()),
+      utc: date.toUTCString()
+    })
+  }
   // Check if dateParam is a valid Unix timestamp or a standard date string
   if (!isNaN(dateParam)) {
     // If it's a number (Unix timestamp), parse it as an integer
